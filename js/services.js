@@ -12,6 +12,7 @@ app.factory('sessionService', function($http){
             return sessionStorage.getItem(key);
         },
         destroy:function(){
+            $http.post('API/DESTROY/');// TODO : déplacer cela dans la boucle car la je supprime uniquement 'user'
             for (var key in sessionStorage){
                 sessionStorage.removeItem(key, sessionStorage.getItem[key]);
             }
@@ -35,11 +36,13 @@ app.factory('loginService', function($http, $location, sessionService){
            });
        },
        logout: function(){
-           sessionService.destroy('user');
+           sessionService.destroy();
            $location.path('/login');
        },
        isLogged: function(){
-           if (sessionService.get('user')) return true; else return false;
+           var user = sessionService.get('user');
+           var  $checkSessionServer = $http.get('API/CHECK_SESSION/?user='+user);
+           return $checkSessionServer;
        }
    }
 });

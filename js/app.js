@@ -12,10 +12,13 @@ app.config(function($routeProvider){
 app.run(function($rootScope, $location, loginService){
     var routesPermissions = ['/home'];
     $rootScope.$on('$routeChangeStart', function(){
-        console.log(routesPermissions.indexOf($location.path()));
-        console.log(loginService.isLogged());
-        if (routesPermissions.indexOf($location.path())!=-1 &&!loginService.isLogged()){
-            $location.path('/login');
+         if (routesPermissions.indexOf($location.path())!=-1){
+             var connected = loginService.isLogged();
+             connected.then(function(msg){
+                if (!msg.data) {
+                    loginService.logout(); // this redirect and delete data entered manually
+                }
+             });
         }
     });
 });
