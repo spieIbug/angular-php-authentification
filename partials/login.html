@@ -1,13 +1,15 @@
 <form id="loginForm" name="loginForm" novalidate>
     <div class="form-group">
+        <p>Welcome : {{user.mail}}</p>
         <label for="user" class="control-label">Login :</label>
-        <input type="text" class="form-control" id="user" name="user" ng-model="user" required>
+        <input type="text" class="form-control" id="user" name="user" ng-model="user.mail" required>
     </div>
     <div class="form-group">
         <label for="pwd" class="control-label">Password :</label>
-        <input type="password" class="form-control" id="pwd" name="pwd" required>
+        <input type="password" class="form-control" id="pwd" name="user.pass " required>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-success" ng-disabled="loginForm.$invalid">Connexion</button>
+        <button type="submit" class="btn btn-success" ng-click="login(user)" ng-disabled="loginForm.$invalid">Connexion</button>
     </div>
 </form>
+{{msgTxt}}
