@@ -21,18 +21,22 @@ app.factory('sessionService', function($http){
 
 app.factory('loginService', function($http, $location, sessionService){
    return{
-       login:function(data, scope){
+       login:function(data, $scope){
            var $promise = $http.post('API/',data);
            $promise.then(function(msg){
                 var userId = msg.data;
-               if (userId){
+               if (userId!="fail"){
                    sessionService.set('user', userId);
                    $location.path('/home');
                } else {
-                   scope.msgTxt = 'incorrect informations';
+                   $scope.msgTxt = 'incorrect informations';
                    $location.path('/login');
                }
            });
+       },
+       logout: function(){
+           sessionService.destroy('user');
+           $location.path('/login');
        }
    }
 });
