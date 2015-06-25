@@ -8,3 +8,14 @@ app.config(function($routeProvider){
     $routeProvider.when('/home', {templateUrl : 'partials/home.html', controller : 'homeCtrl'});
     $routeProvider.otherwise({redirectTo: '/login'});
 });
+
+app.run(function($rootScope, $location, loginService){
+    var routesPermissions = ['/home'];
+    $rootScope.$on('$routeChangeStart', function(){
+        console.log(routesPermissions.indexOf($location.path()));
+        console.log(loginService.isLogged());
+        if (routesPermissions.indexOf($location.path())!=-1 &&!loginService.isLogged()){
+            $location.path('/login');
+        }
+    });
+});

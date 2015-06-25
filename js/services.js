@@ -37,6 +37,9 @@ app.factory('loginService', function($http, $location, sessionService){
        logout: function(){
            sessionService.destroy('user');
            $location.path('/login');
+       },
+       isLogged: function(){
+           if (sessionService.get('user')) return true; else return false;
        }
    }
 });
